@@ -1,0 +1,15 @@
+import = ["~/.config/alacritty/catppuccin-macchiato.toml"]
+
+[cursor.style]
+shape = "Underline"
+
+[font.normal]
+family = "FiraCode Nerd Font Mono"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "F11"
+
+[window]
+startup_mode = "Maximized"
+decorations_theme_variant = "Dark"
