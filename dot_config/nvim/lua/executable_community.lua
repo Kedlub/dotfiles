@@ -15,9 +15,10 @@ return {
   { import = "astrocommunity.pack.svelte" },
   { import = "astrocommunity.recipes.heirline-clock-statusline" },
   { import = "astrocommunity.recipes.heirline-mode-text-statusline" },
-  { import = "astrocommunity.completion.copilot-lua-cmp" },
+  { import = "astrocommunity.completion.copilot-cmp" },
   -- { import = "astrocommunity.color.transparent-nvim" },
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.indent.mini-indentscope" },
+  { import = "astrocommunity.lsp.inc-rename-nvim" },
 }
