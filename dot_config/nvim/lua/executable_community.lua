@@ -18,7 +18,7 @@ return {
   { import = "astrocommunity.completion.copilot-cmp" },
   -- { import = "astrocommunity.color.transparent-nvim" },
   { import = "astrocommunity.pack.tailwindcss" },
-  { import = "astrocommunity.colorscheme.catppuccin" },
+  -- { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.indent.mini-indentscope" },
   { import = "astrocommunity.lsp.inc-rename-nvim" },
 }
