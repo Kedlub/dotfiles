@@ -9,6 +9,7 @@ return {
   -- import/override with your plugins folder
   { import = "astrocommunity.pack.html-css" },
   { import = "astrocommunity.pack.typescript" },
+  { import = "astrocommunity.pack.go" },
   { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.java" },
@@ -21,4 +22,5 @@ return {
   -- { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.indent.mini-indentscope" },
   { import = "astrocommunity.lsp.inc-rename-nvim" },
+  { import = "astrocommunity.editing-support.copilotchat-nvim"}
 }
