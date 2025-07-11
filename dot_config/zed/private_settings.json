@@ -7,20 +7,43 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "agent": {
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4.1"
+    },
+    "model_parameters": [],
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4.1"
+    },
+    "version": "2"
+  },
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "icon_theme": {
+    "mode": "system",
+    "dark": "Catppuccin Macchiato",
+    "light": "Catppuccin Latte"
+  },
   "outline_panel": {
     "dock": "left"
   },
-  "show_inline_completions": true,
+  "show_edit_predictions": true,
   "vim_mode": false,
   "ui_font_size": 16,
-  "buffer_font_size": 16,
+  "buffer_font_size": 14,
   "theme": {
     "mode": "system",
-    "light": "One Light",
+    "light": "Catppuccin Latte (sapphire)",
     "dark": "Catppuccin Macchiato (sapphire)"
   },
   "terminal": {
     "font_family": "FiraCode Nerd Font",
     "font_size": 11.25
+  },
+  "calls": {
+    "mute_on_join": true
   }
 }

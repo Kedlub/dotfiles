@@ -1,0 +1,8 @@
+[
+  {
+    "context": "Editor && edit_prediction_conflict",
+    "bindings": {
+      "tab": "editor::AcceptEditPrediction"
+    }
+  }
+]
