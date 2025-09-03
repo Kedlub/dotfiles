@@ -7,16 +7,26 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "context_servers": {
+    "mcp-server-context7": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {
+        "default_minimum_tokens": "10000"
+      }
+    }
+  },
   "agent": {
+    "default_profile": "ask",
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "gpt-4.1"
+      "model": "grok-code-fast-1"
     },
     "model_parameters": [],
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-4.1"
-    },
+      "model": "grok-code-fast-1"
+    }
   },
   "features": {
     "edit_prediction_provider": "copilot"
@@ -44,5 +54,26 @@
   },
   "calls": {
     "mute_on_join": true
+  },
+  "tabs": {
+    "file_icons": true
+  },
+  "lsp": {
+    "discord_presence": {
+      "initialization_options": {
+        "idle": {
+          "action": "clear_activity"
+        }
+      }
+    },
+    "biome": {
+      "settings": {
+        "require_config_file": true
+      }
+    }
+  },
+  "auto_signature_help": true,
+  "inlay_hints": {
+    "enabled": true
   }
 }
