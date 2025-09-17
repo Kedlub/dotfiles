@@ -56,7 +56,9 @@
     "mute_on_join": true
   },
   "tabs": {
-    "file_icons": true
+    "file_icons": true,
+    "git_status": true,
+    "show_diagnostics": "errors"
   },
   "lsp": {
     "discord_presence": {
