@@ -57,9 +57,6 @@ autoload -Uz compinit; compinit
 zinit light Aloxaf/fzf-tab
 
 # Lazy-loaded CLI tools
-zinit ice wait"0a" lucid from"gh-r" as"command" mv"eza* -> eza"
-zinit light eza-community/eza
-
 zinit ice wait"0a" lucid from"gh-r" as"command" mv"fd* -> fd" pick"fd/fd"
 zinit light sharkdp/fd
 
