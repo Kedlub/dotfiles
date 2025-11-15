@@ -24,15 +24,6 @@ zinit light-mode for \
 # Environment variables
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Proto toolchain manager - auto-install if missing
-export PROTO_HOME="$HOME/.proto"
-if [[ ! -f "$PROTO_HOME/bin/proto" ]]; then
-    print -P "%F{33}Installing Proto toolchain manager...%f"
-    bash <(curl -fsSL https://moonrepo.dev/install/proto.sh) --no-modify-profile
-    print -P "%F{34}Proto installed successfully.%f"
-fi
-export PATH="$PROTO_HOME/shims:$PROTO_HOME/bin:$PATH"
-
 # Shell hooks - load immediately (non-turbo)
 zinit ice as"command" from"gh-r" \
     atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
@@ -82,9 +73,6 @@ clear() {
   command clear
   fastfetch
 }
-
-# Load local .zshrc additions
-source ~/.zshrc.local
 
 # Show fastfetch on startup
 [[ -o interactive ]] && fastfetch
