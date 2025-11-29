@@ -7,9 +7,10 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "show_signature_help_after_edits": true,
+  "disable_ai": false,
   "context_servers": {
     "mcp-server-context7": {
-      "source": "extension",
       "enabled": true,
       "settings": {
         "default_minimum_tokens": "10000"
@@ -17,7 +18,7 @@
     }
   },
   "agent": {
-    "default_profile": "ask",
+    "default_profile": "write",
     "inline_assistant_model": {
       "provider": "copilot_chat",
       "model": "grok-code-fast-1"
@@ -25,7 +26,7 @@
     "model_parameters": [],
     "default_model": {
       "provider": "copilot_chat",
-      "model": "grok-code-fast-1"
+      "model": "claude-opus-4.5"
     }
   },
   "features": {
@@ -74,7 +75,6 @@
       }
     }
   },
-  "auto_signature_help": true,
   "inlay_hints": {
     "enabled": true
   }
