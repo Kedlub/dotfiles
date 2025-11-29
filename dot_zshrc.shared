@@ -44,6 +44,9 @@ zinit light ajeetdsouza/zoxide
 zinit light zsh-users/zsh-completions
 autoload -Uz compinit; compinit
 
+zinit ice lucid atinit"ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20"
+zinit light zsh-users/zsh-autosuggestions
+
 # fzf-tab
 zinit light Aloxaf/fzf-tab
 
@@ -55,9 +58,6 @@ zinit ice wait"0a" lucid from"gh-r" as"command" mv"bat* -> bat" pick"bat/bat"
 zinit light sharkdp/bat
 
 # Suggestions and syntax highlighting (load last)
-zinit ice wait"0b" lucid atinit"ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20"
-zinit light zsh-users/zsh-autosuggestions
-
 zinit ice wait"0c" lucid
 zinit light zsh-users/zsh-syntax-highlighting
 
