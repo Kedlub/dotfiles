@@ -1,0 +1,6 @@
+[include]
+# paths = ["/etc/topgrade.toml"]
+
+[misc]
+
+only = ["brew_cask", "brew_formula", "bun", "bun_packages", "cargo", "chezmoi", "deno", "distrobox", "dotnet", "github_cli_extensions", "go", "helix", "pip3", "pipx", "poetry", "pnpm", "rustup", "shell", "tldr", "toolbx", "vscode", "vscodium"]
