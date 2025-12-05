@@ -7,6 +7,8 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "colorize_brackets": true,
+  "restore_on_startup": "none",
   "show_signature_help_after_edits": true,
   "disable_ai": false,
   "context_servers": {
