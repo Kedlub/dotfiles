@@ -24,22 +24,6 @@ zinit light-mode for \
 # Environment variables
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Shell hooks - load immediately (non-turbo)
-zinit ice as"command" from"gh-r" \
-    atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-    atpull"%atclone" src"init.zsh"
-zinit light starship/starship
-
-zinit ice as"command" from"gh-r" bpick"atuin-*.tar.gz" mv"atuin*/atuin -> atuin" \
-    atclone"./atuin init zsh > init.zsh; ./atuin gen-completions --shell zsh > _atuin" \
-    atpull"%atclone" src"init.zsh"
-zinit light atuinsh/atuin
-
-zinit ice as"command" from"gh-r" \
-    atclone"./zoxide init zsh > init.zsh" \
-    atpull"%atclone" src"init.zsh"
-zinit light ajeetdsouza/zoxide
-
 # Completions
 zinit light zsh-users/zsh-completions
 autoload -Uz compinit; compinit
@@ -50,26 +34,26 @@ zinit light zsh-users/zsh-autosuggestions
 # fzf-tab
 zinit light Aloxaf/fzf-tab
 
-# Lazy-loaded CLI tools
-zinit ice wait"0a" lucid from"gh-r" as"command" mv"fd* -> fd" pick"fd/fd"
-zinit light sharkdp/fd
-
-zinit ice wait"0a" lucid from"gh-r" as"command" mv"bat* -> bat" pick"bat/bat"
-zinit light sharkdp/bat
-
 # Suggestions and syntax highlighting (load last)
 zinit ice wait"0c" lucid
 zinit light zsh-users/zsh-syntax-highlighting
 
 # Aliases
 alias ll="eza -la --icons"
+alias s="kitten ssh"
 
 # Keybindings
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 
+# External tools initialization
+eval "$(starship init zsh)"
+eval "$(atuin init zsh)"
+eval "$(zoxide init zsh)"
+
 # Functions
 clear() {
+  printf '\033[2J\033[3J\033[1;1H'
   command clear
   fastfetch
 }

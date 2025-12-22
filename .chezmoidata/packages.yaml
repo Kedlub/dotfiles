@@ -1,0 +1,7 @@
+packages:
+  darwin:
+    brews: ['atuin', 'zoxide', 'bat', 'fd', 'fzf']
+  linux:
+    dnf: ['atuin', 'zoxide', 'bat', 'fd-find', 'fzf']
+  shared:
+    cargo: ['cargo-update', 'cargo-binstall', 'starship', 'eza']

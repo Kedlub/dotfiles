@@ -1,0 +1,19 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+brew bundle --file=/dev/stdin <<EOF
+{{ range .packages.darwin.brews -}}
+brew {{ . | quote }}
+{{ end -}}
+EOF
+{{ range .packages.shared.cargo -}}
+cargo install {{ . | quote }}
+{{ end -}}
+{{ else if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+{{ range .packages.linux.dnf -}}
+sudo dnf install -y {{ . | quote }}
+{{ end -}}
+{{ range .packages.shared.cargo -}}
+cargo install {{ . | quote }}
+{{ end -}}
+{{ end -}}
