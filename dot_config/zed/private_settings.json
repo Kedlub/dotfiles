@@ -7,8 +7,10 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "git_panel": {
+    "sort_by_path": false
+  },
   "colorize_brackets": true,
-  "restore_on_startup": "none",
   "show_signature_help_after_edits": true,
   "disable_ai": false,
   "context_servers": {
@@ -23,12 +25,12 @@
     "default_profile": "write",
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "grok-code-fast-1"
+      "model": "gpt-5-mini"
     },
     "model_parameters": [],
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-opus-4.5"
+      "model": "claude-sonnet-4.5"
     }
   },
   "features": {
