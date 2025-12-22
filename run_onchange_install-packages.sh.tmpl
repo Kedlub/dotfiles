@@ -10,9 +10,7 @@ cargo install {{ . | quote }}
 {{ end -}}
 {{ else if eq .chezmoi.os "linux" -}}
 #!/bin/bash
-{{ range .packages.linux.dnf -}}
-sudo dnf install -y {{ . | quote }}
-{{ end -}}
+sudo dnf install -y {{ range .packages.linux.dnf }}{{ . | quote }} {{ end }}
 {{ range .packages.shared.cargo -}}
 cargo install {{ . | quote }}
 {{ end -}}
