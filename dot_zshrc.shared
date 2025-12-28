@@ -23,6 +23,7 @@ zinit light-mode for \
 
 # Environment variables
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export MANPAGER="bat -plman"
 
 # Completions
 zinit light zsh-users/zsh-completions
@@ -41,6 +42,8 @@ zinit light zsh-users/zsh-syntax-highlighting
 # Aliases
 alias ll="eza -la --icons"
 alias s="kitten ssh"
+
+alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 
 # Keybindings
 bindkey "^[[1;3C" forward-word
