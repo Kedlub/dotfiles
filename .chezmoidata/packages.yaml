@@ -1,7 +1,27 @@
 packages:
   darwin:
-    brews: ['atuin', 'zoxide', 'bat', 'fd', 'fzf']
+    brews:
+      [
+        'atuin',
+        'bat',
+        'fastfetch',
+        'fd',
+        'fzf',
+        'tealdeer',
+        'topgrade',
+        'zoxide',
+      ]
   linux:
-    dnf: ['atuin', 'zoxide', 'bat', 'fd-find', 'fzf']
+    dnf:
+      [
+        'atuin',
+        'bat',
+        'fastfetch',
+        'fd-find',
+        'fzf',
+        'tealdeer',
+        'topgrade',
+        'zoxide',
+      ]
   shared:
-    cargo: ['cargo-update', 'cargo-binstall', 'starship', 'eza']
+    cargo: ['eza', 'cargo-binstall', 'cargo-update', 'starship']
