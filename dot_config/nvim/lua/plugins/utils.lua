@@ -1,0 +1,15 @@
+return {
+  {
+    "vyfor/cord.nvim",
+    opts = {
+      display = {
+        theme = "catppuccin",
+        flavor = "accent",
+      },
+    },
+  },
+  {
+    "wakatime/vim-wakatime",
+    lazy = false,
+  },
+}

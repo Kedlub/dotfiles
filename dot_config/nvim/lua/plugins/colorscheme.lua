@@ -13,4 +13,13 @@ return {
       colorscheme = "catppuccin",
     },
   },
+
+  {
+    "folke/snacks.nvim",
+    opts = {
+      lazygit = {
+        configure = false,
+      },
+    },
+  },
 }
