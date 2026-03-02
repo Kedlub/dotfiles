@@ -43,7 +43,7 @@ zinit light zsh-users/zsh-syntax-highlighting
 alias ll="eza -la --icons"
 alias s="kitten ssh"
 
-alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
+alias -g -- --help='--help 2>&1 | bat -P --language=help --style=plain'
 
 # Keybindings
 bindkey "^[[1;3C" forward-word
