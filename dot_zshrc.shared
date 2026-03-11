@@ -61,5 +61,42 @@ clear() {
   fastfetch
 }
 
+n() {
+    # Run the install command and capture output
+    local output=$(pnpm env use --global "$@" 2>&1)
+    echo "$output"
+    
+    # Extract the installed version from output
+    local installed_version=$(echo "$output" | grep -oE 'Node\.js [0-9]+\.[0-9]+\.[0-9]+ was installed' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
+    
+    if [[ -z "$installed_version" ]]; then
+        return 0
+    fi
+    
+    # Extract major version
+    local major_version=$(echo "$installed_version" | cut -d. -f1)
+    
+    # Get list of all installed versions
+    local all_versions=$(pnpm env list --global | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | tr -d ' ')
+    
+    # Find versions with same major but older than the one we just installed
+    local to_remove=()
+    while IFS= read -r version; do
+        if [[ -n "$version" ]]; then
+            local ver_major=$(echo "$version" | cut -d. -f1)
+            if [[ "$ver_major" == "$major_version" ]] && [[ "$version" != "$installed_version" ]]; then
+                to_remove+=("$version")
+            fi
+        fi
+    done <<< "$all_versions"
+    
+    # Remove old versions if any found
+    if [[ ${#to_remove[@]} -gt 0 ]]; then
+        echo "Removing older v${major_version} versions: ${to_remove[*]}"
+        pnpm env rm -g "${to_remove[@]}"
+    fi
+}
+
+
 # Show fastfetch on startup
 [[ -o interactive ]] && fastfetch
