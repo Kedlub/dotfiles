@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "includeCoAuthoredBy": false,
+  "cleanupPeriodDays": 90,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "claude-code-wakatime@wakatime": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "compound-engineering@compound-engineering-plugin": true
+  },
+  "extraKnownMarketplaces": {
+    "compound-engineering-plugin": {
+      "source": {
+        "source": "github",
+        "repo": "EveryInc/compound-engineering-plugin"
+      }
+    }
+  },
+  "sandbox": {
+    "filesystem": {
+      "allowWrite": [
+        "~/.cache/uv",
+        "~/go",
+        "~/Library/Caches/go-build",
+        "~/Library/pnpm",
+        "~/.bun",
+        "~/Library/Caches/pypoetry",
+        "~/.npm"
+      ]
+    }
+  },
+  "alwaysThinkingEnabled": true
+}
