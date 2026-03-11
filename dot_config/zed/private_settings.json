@@ -7,8 +7,11 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "edit_predictions": {
+    "provider": "copilot",
+  },
   "git_panel": {
-    "sort_by_path": false
+    "sort_by_path": false,
   },
   "colorize_brackets": true,
   "show_signature_help_after_edits": true,
@@ -17,32 +20,29 @@
     "mcp-server-context7": {
       "enabled": true,
       "settings": {
-        "default_minimum_tokens": "10000"
-      }
-    }
+        "default_minimum_tokens": "10000",
+      },
+    },
   },
   "agent": {
     "default_profile": "write",
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "gpt-5-mini"
+      "model": "gpt-5-mini",
     },
     "model_parameters": [],
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.5"
-    }
-  },
-  "features": {
-    "edit_prediction_provider": "copilot"
+      "model": "claude-sonnet-4.5",
+    },
   },
   "icon_theme": {
     "mode": "system",
     "dark": "Catppuccin Macchiato",
-    "light": "Catppuccin Latte"
+    "light": "Catppuccin Latte",
   },
   "outline_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "show_edit_predictions": true,
   "vim_mode": false,
@@ -51,35 +51,41 @@
   "theme": {
     "mode": "system",
     "light": "Catppuccin Latte (sapphire)",
-    "dark": "Catppuccin Macchiato (sapphire)"
+    "dark": "Catppuccin Macchiato (sapphire)",
   },
   "terminal": {
     "font_family": "FiraCode Nerd Font",
-    "font_size": 11.25
+    "font_size": 11.25,
   },
   "calls": {
-    "mute_on_join": true
+    "mute_on_join": true,
   },
   "tabs": {
     "file_icons": true,
     "git_status": true,
-    "show_diagnostics": "errors"
+    "show_diagnostics": "errors",
   },
   "lsp": {
     "discord_presence": {
       "initialization_options": {
         "idle": {
-          "action": "clear_activity"
-        }
-      }
+          "action": "clear_activity",
+        },
+      },
     },
     "biome": {
       "settings": {
-        "require_config_file": true
-      }
-    }
+        "require_config_file": true,
+      },
+    },
+    "tinymist": {
+      "settings": {
+        "exportPdf": "onSave",
+        "outputPath": "$root/$name",
+      },
+    },
   },
   "inlay_hints": {
-    "enabled": true
-  }
+    "enabled": true,
+  },
 }
