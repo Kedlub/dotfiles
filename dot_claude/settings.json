@@ -1,7 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "cleanupPeriodDays": 90,
-  "includeCoAuthoredBy": false,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
@@ -13,17 +16,9 @@
     "typescript-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
-    "compound-engineering@compound-engineering-plugin": true
+    "frontend-design@claude-plugins-official": true
   },
-  "extraKnownMarketplaces": {
-    "compound-engineering-plugin": {
-      "source": {
-        "source": "github",
-        "repo": "EveryInc/compound-engineering-plugin"
-      }
-    }
-  },
+  "extraKnownMarketplaces": {},
   "sandbox": {
     "filesystem": {
       "allowWrite": [
@@ -37,5 +32,14 @@
       ]
     }
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "voiceEnabled": true,
+  "permissions": {
+    "allow": [
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "mcp__exa__web_search_exa",
+      "mcp__exa__get_code_context_exa"
+    ]
+  }
 }
