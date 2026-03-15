@@ -1,0 +1,5 @@
+[data]
+[data.git]
+    name = {{ promptStringOnce . "git.name" "Git user name" | quote }}
+    email = {{ promptStringOnce . "git.email" "Git email" | quote }}
+    signingkey = {{ promptStringOnce . "git.signingkey" "GPG signing key" | quote }}
