@@ -9,8 +9,16 @@ packages:
         "fzf",
         "gh",
         "git-credential-oauth",
+        "git-delta",
+        "hyperfine",
+        "jq",
+        "lazygit",
+        "neovim",
+        "ripgrep",
         "tealdeer",
+        "tokei",
         "topgrade",
+        "yq",
         "zoxide",
       ]
   linux:
@@ -23,9 +31,17 @@ packages:
         "fzf",
         "gh",
         "git-credential-oauth",
+        "git-delta",
+        "hyperfine",
+        "jq",
+        "lazygit",
+        "neovim",
+        "ripgrep",
         "tealdeer",
+        "tokei",
         "topgrade",
+        "yq",
         "zoxide",
       ]
   shared:
-    cargo: ["eza", "cargo-binstall", "cargo-update", "starship"]
+    cargo: ["eza", "cargo-binstall", "cargo-update", "starship", "xh"]
