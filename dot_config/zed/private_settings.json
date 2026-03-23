@@ -7,9 +7,17 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "session": {
+    "restore_unsaved_buffers": false
+  },
+  "window_decorations": "server",
   "restore_on_startup": "launchpad",
   "edit_predictions": {
-    "provider": "copilot",
+    "ollama": {
+      "prompt_format": "qwen",
+      "model": "nishtahir/zeta:latest"
+    },
+    "provider": "ollama",
   },
   "git_panel": {
     "sort_by_path": false,
