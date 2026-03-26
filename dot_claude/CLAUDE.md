@@ -13,39 +13,6 @@ Prefer the Exa MCP server for web searches. It returns clean, LLM-optimized
 content and uses less context than fetching and parsing pages yourself.
 Only fall back to WebSearch if Exa doesn't have the information.
 
-## Temporary Workspace Management
-
-### Directory Structure
-- Use `/tmp/claude/` as the base directory for all temporary work
-- Create descriptive subdirectories based on the task context
-  - Examples: `/tmp/claude/mc-falling-block-research`, `/tmp/claude/csv-analysis`
-- **Always check existing `/tmp/claude/` subdirectories first** before creating new ones
-  - Use `fd` or `eza --tree` to survey existing work
-  - Reuse relevant directories if the research topic overlaps
-
-### Documentation Requirements
-After completing work in a temporary directory, create a `README.md` that includes:
-- Brief description of what the directory contains
-- Date/timestamp of the research session
-- Key findings or purpose
-- List of main files and their purposes
-
-Example README.md:
-```
-# MC Falling Block Research
-**Date:** 2025-01-18
-**Purpose:** Investigate Minecraft falling block entity behavior and NBT structure
-
-## Contents
-- `falling_block_nbt.json` - Example NBT data structures
-- `entity_behavior.md` - Notes on physics simulation
-- `test_scenarios.txt` - Edge cases for testing
-
-## Key Findings
-- Falling blocks use FallingSand entity type (pre-1.11) or falling_block (1.11+)
-- NBT tag `Time` tracks ticks since entity spawned
-```
-
 ## Preferred CLI Tools
 
 Use these modern CLI tools instead of their traditional alternatives:
@@ -110,6 +77,13 @@ Follow the 50/72 conventional commit format:
 - Description: Maximum 72 characters per line
 - No formatting (no markdown, no bullet points)
 - Plain text only in commit messages
+
+## Planning and Brainstorming
+
+When in plan mode or generally planning/brainstorming, use an interview-style
+approach: ask questions using the AskUserQuestion tool to collaboratively shape
+the plan rather than presenting a finished plan upfront. Iterate through
+questions to refine requirements, constraints, and design decisions together.
 
 ## General Approach
 - Assume familiarity with technical concepts and command-line tools
