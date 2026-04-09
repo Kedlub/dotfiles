@@ -3,4 +3,7 @@
 
 [misc]
 
-only = ["brew_cask", "brew_formula", "bun", "bun_packages", "cargo", "chezmoi", "claude_code", "deno", "distrobox", "dotnet", "github_cli_extensions", "go", "helix", "pip3", "pipx", "poetry", "pnpm", "rustup", "shell", "tldr", "toolbx", "uv", "vscode", "vscodium"]
+only = ["brew_cask", "brew_formula", "bun", "bun_packages", "cargo", "chezmoi", "claude_code", "custom_commands", "deno", "distrobox", "dotnet", "github_cli_extensions", "go", "helix", "pip3", "pipx", "poetry", "pnpm", "rustup", "shell", "tldr", "toolbx", "uv", "vscode", "vscodium"]
+
+[commands]
+"pnpm self-update" = "pnpm self-update"
