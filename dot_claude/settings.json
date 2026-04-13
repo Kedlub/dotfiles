@@ -43,7 +43,7 @@
     "command": "~/.claude/statusline.sh"
   },
   "enabledPlugins": {
-    "claude-code-wakatime@wakatime": true,
+    "claude-code-wakatime@wakatime": false,
     "gopls-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
@@ -65,5 +65,6 @@
   },
   "alwaysThinkingEnabled": true,
   "voiceEnabled": true,
-  "autoDreamEnabled": true
+  "autoDreamEnabled": true,
+  "skipDangerousModePermissionPrompt": true
 }
