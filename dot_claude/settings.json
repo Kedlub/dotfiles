@@ -36,6 +36,29 @@
       "Bash(stat:*)",
       "Bash(id:*)",
       "Bash(type:*)"
+    ],
+    "defaultMode": "auto"
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/notify.sh stop"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/notify.sh notification"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -44,9 +67,6 @@
   },
   "enabledPlugins": {
     "claude-code-wakatime@wakatime": false,
-    "gopls-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {},
@@ -64,7 +84,10 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "voiceEnabled": true,
   "autoDreamEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark-ansi",
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true
 }

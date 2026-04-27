@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Plays a Claude Code hook notification sound. Invoked from settings.json.
+set -eu
+
+event="${1:-}"
+
+{{ if eq .chezmoi.os "darwin" -}}
+case "$event" in
+  stop)         afplay /System/Library/Sounds/Glass.aiff ;;
+  notification) afplay /System/Library/Sounds/Tink.aiff ;;
+  *) exit 0 ;;
+esac
+{{ else -}}
+case "$event" in
+  stop)         paplay /usr/share/sounds/ocean/stereo/completion-success.oga ;;
+  notification) paplay /usr/share/sounds/ocean/stereo/message-new-instant.oga ;;
+  *) exit 0 ;;
+esac
+{{ end -}}
