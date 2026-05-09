@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Plays a Codex notification sound. Invoked from config.toml notify and hooks.
+set -eu
+
+event="${1:-notification}"
+
+{{ if eq .chezmoi.os "darwin" -}}
+case "$event" in
+  stop)         afplay /System/Library/Sounds/Glass.aiff ;;
+  notification) afplay /System/Library/Sounds/Tink.aiff ;;
+  *)            afplay /System/Library/Sounds/Tink.aiff ;;
+esac
+{{ else -}}
+case "$event" in
+  stop)         paplay /usr/share/sounds/ocean/stereo/completion-success.oga ;;
+  notification) paplay /usr/share/sounds/ocean/stereo/message-new-instant.oga ;;
+  *)            paplay /usr/share/sounds/ocean/stereo/message-new-instant.oga ;;
+esac
+{{ end -}}

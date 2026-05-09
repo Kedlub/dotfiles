@@ -1,0 +1,36 @@
+approvals_reviewer = "guardian_subagent"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+personality = "pragmatic"
+notify = ["/bin/sh", "-c", "exec \"$HOME/.codex/notify.sh\""]
+
+[features]
+codex_hooks = true
+
+[sandbox_workspace_write]
+writable_roots = [
+  "~/.cache/uv",
+  "~/go",
+  "~/Library/Caches/go-build",
+  "~/Library/pnpm",
+  "~/.bun",
+  "~/Library/Caches/pypoetry",
+  "~/.npm",
+]
+
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp"
+enabled = true
+
+[mcp_servers.exa]
+url = "https://mcp.exa.ai/mcp"
+enabled = true
+
+[[hooks.Stop]]
+[[hooks.Stop.hooks]]
+type = "command"
+command = "$HOME/.codex/notify.sh stop"
+timeout = 5
+
+[tui.model_availability_nux]
+"gpt-5.5" = 1
