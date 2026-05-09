@@ -21,16 +21,23 @@ writable_roots = [
 [mcp_servers.context7]
 url = "https://mcp.context7.com/mcp"
 enabled = true
+enabled_tools = [
+  "resolve-library-id",
+  "query-docs",
+]
 
 [mcp_servers.exa]
 url = "https://mcp.exa.ai/mcp"
 enabled = true
+enabled_tools = [
+  "web_search_exa",
+  "web_search_advanced_exa",
+  "get_code_context_exa",
+  "crawling_exa",
+]
 
 [[hooks.Stop]]
 [[hooks.Stop.hooks]]
 type = "command"
 command = "$HOME/.codex/notify.sh stop"
 timeout = 5
-
-[tui.model_availability_nux]
-"gpt-5.5" = 1

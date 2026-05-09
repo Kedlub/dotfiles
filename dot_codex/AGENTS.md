@@ -3,9 +3,9 @@
 ## Documentation and Research Preferences
 
 When working with documentation or conducting research tasks:
-- Prefer Context7 over basic search tools when applicable.
-- Use Context7 for codebase understanding and documentation lookup.
-- Use Context7 semantic search to find relevant code patterns.
+- Prefer local repository inspection with `rg`, file reads, and project tooling for codebase understanding.
+- Prefer Context7 for library, framework, SDK, and API documentation when applicable.
+- Use Context7 to find current external code patterns and reference docs.
 
 ## Web Search
 
@@ -75,3 +75,4 @@ decisions instead of presenting a finished plan upfront.
 - Assume familiarity with technical concepts and command-line tools.
 - Provide detailed technical explanations without oversimplification.
 - Use efficient, modern tooling when available.
+- Use the project's existing package manager, scripts, formatter, and test commands before falling back to global preferences.

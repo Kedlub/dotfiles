@@ -5,15 +5,25 @@ set -eu
 event="${1:-notification}"
 
 {{ if eq .chezmoi.os "darwin" -}}
+command -v afplay >/dev/null 2>&1 || exit 0
+
 case "$event" in
-  stop)         afplay /System/Library/Sounds/Glass.aiff ;;
-  notification) afplay /System/Library/Sounds/Tink.aiff ;;
-  *)            afplay /System/Library/Sounds/Tink.aiff ;;
+  stop)         sound="/System/Library/Sounds/Glass.aiff" ;;
+  notification) sound="/System/Library/Sounds/Tink.aiff" ;;
+  *)            sound="/System/Library/Sounds/Tink.aiff" ;;
 esac
+
+[ -f "$sound" ] || exit 0
+afplay "$sound" >/dev/null 2>&1 || true
 {{ else -}}
+command -v paplay >/dev/null 2>&1 || exit 0
+
 case "$event" in
-  stop)         paplay /usr/share/sounds/ocean/stereo/completion-success.oga ;;
-  notification) paplay /usr/share/sounds/ocean/stereo/message-new-instant.oga ;;
-  *)            paplay /usr/share/sounds/ocean/stereo/message-new-instant.oga ;;
+  stop)         sound="/usr/share/sounds/ocean/stereo/completion-success.oga" ;;
+  notification) sound="/usr/share/sounds/ocean/stereo/message-new-instant.oga" ;;
+  *)            sound="/usr/share/sounds/ocean/stereo/message-new-instant.oga" ;;
 esac
+
+[ -f "$sound" ] || exit 0
+paplay "$sound" >/dev/null 2>&1 || true
 {{ end -}}
