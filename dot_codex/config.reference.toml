@@ -2,6 +2,7 @@ approvals_reviewer = "guardian_subagent"
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 personality = "pragmatic"
+web_search = "disabled"
 
 [sandbox_workspace_write]
 writable_roots = [
@@ -21,3 +22,7 @@ enabled = true
 [mcp_servers.exa]
 url = "https://mcp.exa.ai/mcp"
 enabled = true
+
+[tui]
+status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-remaining", "five-hour-limit"]
+status_line_use_colors = true
