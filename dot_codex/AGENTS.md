@@ -50,6 +50,17 @@ Use these modern CLI tools instead of their traditional alternatives:
 
 - Use `hyperfine` for benchmarking and comparing command performance.
 
+### Python
+
+- Prefer `uv` for Python workflows unless the project clearly uses another
+  tool or package manager.
+- Use `uv run` for one-off inline scripts, adding temporary dependencies with
+  `--with` as needed.
+- Use `uv run` for standalone Python script files, and declare script
+  dependencies with PEP 723 metadata headers when dependencies are required.
+- Use `uv` for `pyproject.toml`, dependency, virtual environment, and Python
+  version management tasks when there is no conflicting project convention.
+
 ### JS/TS Linting and Formatting
 
 - Prefer `biome` over eslint/prettier when a project has no existing eslint config.
