@@ -1,14 +1,50 @@
 customCommands:
   - key: "C"
     context: "files"
-    description: "Generate commit with Claude"
+    description: "Generate commit with Codex"
     command: |
-      # Generate commit message with spinner
-      COMMIT_MSG=$(gum spin --spinner dot --title "Generating commit message..." -- \
-        claude --no-session-persistence -p 'generate a 50/72 conventional commit according to the current staged changes. take into account only staged changes and nothing else. IMPORTANT: output just the commit text and nothing else. do not use markdown formatting. do not comment your thoughts' --output-format text)
+      SCHEMA_FILE=$(mktemp)
+      OUTPUT_FILE=$(mktemp)
+      ERROR_FILE=$(mktemp)
+      trap 'rm -f "$SCHEMA_FILE" "$OUTPUT_FILE" "$ERROR_FILE"' EXIT
 
-      # Show preview and let user edit
-      FINAL_MSG=$(echo "$COMMIT_MSG" | gum write --placeholder "Edit commit message...")
+      printf '%s\n' \
+        '{"type":"object","additionalProperties":false,"properties":{"commit_message":{"type":"string","description":"The complete conventional commit message, formatted with a subject at 50 characters or less and body lines wrapped at 72 characters or less when a body is needed."}},"required":["commit_message"]}' \
+        > "$SCHEMA_FILE"
+
+      PROMPT='Generate a 50/72 conventional commit message according to the current staged changes. Take into account only staged changes and nothing else. Inspect the staged diff yourself. Return only the structured response matching the provided schema.'
+
+      # Generate commit message with spinner
+      gum spin --spinner dot --title "Generating commit message..." -- \
+        sh -c 'codex exec --ephemeral --sandbox read-only -C "$PWD" --color never -c approval_policy="never" --output-schema "$1" --output-last-message "$2" "$3" >/dev/null 2>"$4"' \
+          sh "$SCHEMA_FILE" "$OUTPUT_FILE" "$PROMPT" "$ERROR_FILE"
+
+      if [ $? -ne 0 ]; then
+        gum style --foreground 1 "Failed to generate commit message"
+        cat "$ERROR_FILE"
+        exit 1
+      fi
+
+      COMMIT_MSG=$(jq -r '.commit_message // empty' "$OUTPUT_FILE")
+      COMMIT_LINES=$(printf '%s\n' "$COMMIT_MSG" | wc -l | tr -d ' ')
+      WRITE_HEIGHT=$((COMMIT_LINES + 1))
+
+      if [ "$WRITE_HEIGHT" -lt 5 ]; then
+        WRITE_HEIGHT=5
+      fi
+
+      # Show preview and let user choose next action
+      gum style --foreground 99 "Generated commit message:"
+      printf '\n%s\n\n' "$COMMIT_MSG"
+      ACTION=$(gum choose --header "" "Commit as shown" "Edit message" "Cancel")
+
+      if [ "$ACTION" = "Commit as shown" ]; then
+        FINAL_MSG=$COMMIT_MSG
+      elif [ "$ACTION" = "Edit message" ]; then
+        FINAL_MSG=$(printf '%s' "$COMMIT_MSG" | gum write --height "$WRITE_HEIGHT" --placeholder "Edit commit message...")
+      else
+        FINAL_MSG=
+      fi
 
       # Commit if not empty
       if [ -n "$FINAL_MSG" ]; then
