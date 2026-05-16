@@ -1,0 +1,24 @@
+font-family = FiraCode Nerd Font Mono
+cursor-style = block
+
+theme = eldritch.conf
+
+window-save-state = never
+window-width = 120
+window-height = 40
+
+window-padding-x = 4
+window-padding-y = 4
+window-padding-balance = true
+
+macos-titlebar-style = transparent
+
+# Ghostty-specific behavior from the existing config.
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+keybind = shift+enter=text:\n
+keybind = cmd+shift+t=new_tab
+keybind = ctrl+shift+insert=new_tab
+
+shell-integration-features = ssh-env
+
+config-file = ?local.conf
