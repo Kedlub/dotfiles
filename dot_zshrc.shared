@@ -32,8 +32,20 @@ autoload -Uz compinit; compinit
 zinit ice lucid atinit"ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20"
 zinit light zsh-users/zsh-autosuggestions
 
+# Abbreviations expand short commands into full commands before execution
+zinit light olets/zsh-abbr
+
+# Auto-pair quotes, brackets, and parentheses
+zinit light hlissner/zsh-autopair
+
 # fzf-tab
 zinit light Aloxaf/fzf-tab
+zstyle ':fzf-tab:*' switch-group '<' '>'
+zstyle ':fzf-tab:*' fzf-flags --height=80% --layout=reverse --border
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -la --icons --color=always $realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -la --icons --color=always $realpath'
+zstyle ':fzf-tab:complete:ls:*' fzf-preview 'eza -la --icons --color=always $realpath'
+zstyle ':fzf-tab:complete:eza:*' fzf-preview 'eza -la --icons --color=always $realpath'
 
 # Suggestions and syntax highlighting (load last)
 zinit ice wait"0c" lucid
