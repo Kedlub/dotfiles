@@ -13,11 +13,11 @@ window-padding-balance = true
 
 macos-titlebar-style = transparent
 
-# Ghostty-specific behavior from the existing config.
-keybind = global:cmd+grave_accent=toggle_quick_terminal
 keybind = shift+enter=text:\n
 keybind = cmd+shift+t=new_tab
 keybind = ctrl+shift+insert=new_tab
+keybind = ctrl+shift+arrow_left=previous_tab
+keybind = ctrl+shift+arrow_right=next_tab
 
 shell-integration-features = ssh-env
 
