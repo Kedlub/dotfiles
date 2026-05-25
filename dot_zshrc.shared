@@ -68,6 +68,15 @@ eval "$(atuin init zsh)"
 eval "$(zoxide init zsh)"
 
 # Functions
+mkcd() {
+    if (( $# != 1 )); then
+        print -u2 "usage: mkcd DIR"
+        return 2
+    fi
+
+    mkdir -p -- "$1" && z -- "$1"
+}
+
 clear() {
   printf '\033[2J\033[3J\033[1;1H'
   command clear
