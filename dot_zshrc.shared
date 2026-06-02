@@ -25,6 +25,15 @@ zinit light-mode for \
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export MANPAGER="bat -plman"
 
+# Base look inherited by all fzf tools (zoxide overrides it, see _ZO_FZF_OPTS).
+export FZF_DEFAULT_OPTS="
+  --height=80%
+  --layout=reverse
+  --border
+  --info=inline
+  --cycle
+"
+
 # Completions
 zinit light zsh-users/zsh-completions
 autoload -Uz compinit; compinit
@@ -65,7 +74,33 @@ bindkey "^[[1;3D" backward-word
 # External tools initialization
 eval "$(starship init zsh)"
 eval "$(atuin init zsh)"
+# zoxide's interactive fzf (zi). Self-contained: zoxide replaces FZF_DEFAULT_OPTS
+# rather than appending. No --exact = fuzzy. {2} is the path (score is field 1).
+export _ZO_FZF_OPTS="
+  --no-sort
+  --keep-right
+  --cycle
+  --info=inline
+  --exit-0
+  --bind=ctrl-z:ignore,btab:up,tab:down
+  --height=80%
+  --layout=reverse
+  --border
+  --preview='eza -la --icons --color=always {2}'
+  --preview-window=right,50%,border-left
+"
 eval "$(zoxide init zsh)"
+
+# zinit aliases `zi` to itself; drop it so `zi` runs zoxide (zpl/zplg/zini stay).
+(( ${+aliases[zi]} )) && unalias zi
+
+# Alt-c: zoxide interactive jump. Uses __zoxide_zi to avoid the aliased `zi`.
+_zi_widget() {
+  __zoxide_zi < /dev/tty
+  zle reset-prompt
+}
+zle -N _zi_widget
+bindkey '^[c' _zi_widget   # ^[c == Alt-c
 
 # Functions
 mkcd() {
