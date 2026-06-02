@@ -1,17 +1,25 @@
 # Claude Code User Settings
 
-## Documentation and Research Preferences
+## Research First — Always Look Things Up
 
-When working with documentation or conducting research tasks:
-- **Prefer context7** over basic search tools when applicable
-- Use context7 for comprehensive codebase understanding and documentation lookup
-- Leverage context7's semantic search capabilities for finding relevant code patterns
+Internal model knowledge goes stale quickly. When working with any library,
+framework, API, cloud service, or tool — even well-known ones — always look up
+current docs and behavior before writing code or giving advice.
 
-## Web Search
- 
-Prefer the Exa MCP server for web searches. It returns clean, LLM-optimized
-content and uses less context than fetching and parsing pages yourself.
-Only fall back to WebSearch if Exa doesn't have the information.
+- **context7**: Use for library/framework documentation, API syntax, config
+  options, version migration, and CLI usage. Prefer this over web search for
+  anything that has published docs.
+- **Exa**: Use for broader web research — blog posts, changelogs, GitHub
+  issues, Stack Overflow, release announcements. Returns clean LLM-optimized
+  content and uses less context than fetching pages manually. Prefer over
+  WebSearch; only fall back to WebSearch if Exa doesn't have it.
+
+When to look things up (non-exhaustive):
+- Using a library/tool you haven't touched yet in this session
+- Writing integration code against an external API or service
+- Debugging behavior that might stem from a version change
+- Answering a question about current best practices or defaults
+- Any time you're about to say "I believe" or "IIRC" — look it up instead
 
 ## Preferred CLI Tools
 
@@ -70,6 +78,16 @@ Use these modern CLI tools instead of their traditional alternatives:
   - If a project already has eslint configured, use eslint instead
   - Example: `biome check --write file.ts`
 
+### Python
+- **uv**: Prefer for Python workflows unless the project clearly uses another
+  tool or package manager
+  - Use `uv run` for one-off inline scripts, adding temporary dependencies
+    with `--with` as needed
+  - Use `uv run` for standalone script files, declaring dependencies with
+    PEP 723 metadata headers when required
+  - Use `uv` for `pyproject.toml`, dependency, virtual environment, and Python
+    version management when there is no conflicting project convention
+
 ## Git Commit Preferences
 
 Follow the 50/72 conventional commit format:
@@ -89,3 +107,5 @@ questions to refine requirements, constraints, and design decisions together.
 - Assume familiarity with technical concepts and command-line tools
 - Provide detailed technical explanations without oversimplification
 - Use efficient, modern tooling when available
+- Use the project's existing package manager, scripts, formatter, and test
+  commands before falling back to global preferences
