@@ -13,7 +13,7 @@ stdin_data=$(cat)
 # Single jq call - extract all values at once
 # Prefer pre-calculated remaining_percentage (100 - remaining = used toward compact)
 # Fall back to manual calc from raw tokens if not available
-IFS=$'\t' read -r current_dir model_name cost lines_added lines_removed duration_ms ctx_used cache_pct < <(
+IFS=$'\t' read -r current_dir model_name cost lines_added lines_removed duration_ms ctx_used five_h week five_reset week_reset < <(
   echo "$stdin_data" | jq -r '[
         .workspace.current_dir // "unknown",
         .model.display_name // "Unknown",
@@ -31,13 +31,10 @@ IFS=$'\t' read -r current_dir model_name cost lines_added lines_removed duration
                  .context_window.context_window_size) | floor
             else "null" end
         ) catch "null"),
-        (try (
-            (.context_window.current_usage // {}) |
-            if (.input_tokens // 0) + (.cache_read_input_tokens // 0) > 0 then
-                ((.cache_read_input_tokens // 0) * 100 /
-                 ((.input_tokens // 0) + (.cache_read_input_tokens // 0))) | floor
-            else 0 end
-        ) catch 0)
+        (try (.rate_limits.five_hour.used_percentage | round) catch "null"),
+        (try (.rate_limits.seven_day.used_percentage | round) catch "null"),
+        (try (.rate_limits.five_hour.resets_at | floor) catch "null"),
+        (try (.rate_limits.seven_day.resets_at | floor) catch "null")
     ] | @tsv'
 )
 
@@ -50,7 +47,10 @@ if [ -z "$current_dir" ] && [ -z "$model_name" ]; then
   lines_removed=$(echo "$stdin_data" | jq -r '(.cost.total_lines_removed // 0)' 2>/dev/null)
   duration_ms=$(echo "$stdin_data" | jq -r '(.cost.total_duration_ms // 0)' 2>/dev/null)
   ctx_used=""
-  cache_pct="0"
+  five_h="null"
+  week="null"
+  five_reset="null"
+  week_reset="null"
   : "${current_dir:=unknown}"
   : "${model_name:=Unknown}"
   : "${cost:=0}"
@@ -108,22 +108,39 @@ else
   ctx_pct=""
 fi
 
-# Session time (human-readable)
-if [ "$duration_ms" -gt 0 ] 2>/dev/null; then
-  total_sec=$((duration_ms / 1000))
-  hours=$((total_sec / 3600))
-  minutes=$(((total_sec % 3600) / 60))
-  seconds=$((total_sec % 60))
-  if [ "$hours" -gt 0 ]; then
-    session_time="${hours}h ${minutes}m"
-  elif [ "$minutes" -gt 0 ]; then
-    session_time="${minutes}m ${seconds}s"
+# Rate limit widgets (Claude.ai Pro/Max subscribers only; absent otherwise)
+# Color-code by usage: green <50%, yellow <80%, red >=80%
+# Appends a dim ↻countdown until the window resets when resets_at is known.
+format_limit() {
+  local label="$1" pct="$2" reset="$3" color countdown=""
+  [ -z "$pct" ] || [ "$pct" = "null" ] && return 1
+  if [ "$pct" -lt 50 ]; then
+    color='\033[32m'
+  elif [ "$pct" -lt 80 ]; then
+    color='\033[33m'
   else
-    session_time="${seconds}s"
+    color='\033[31m'
   fi
-else
-  session_time=""
-fi
+  if [ -n "$reset" ] && [ "$reset" != "null" ]; then
+    local now rem rh rm
+    now=$(date +%s)
+    rem=$((reset - now))
+    if [ "$rem" -gt 0 ]; then
+      local rd
+      rd=$((rem / 86400))
+      rh=$(((rem % 86400) / 3600))
+      rm=$(((rem % 3600) / 60))
+      if [ "$rd" -gt 0 ]; then
+        countdown=$(printf ' \033[2m↻%dd%dh\033[0m' "$rd" "$rh")
+      elif [ "$rh" -gt 0 ]; then
+        countdown=$(printf ' \033[2m↻%dh%dm\033[0m' "$rh" "$rm")
+      else
+        countdown=$(printf ' \033[2m↻%dm\033[0m' "$rm")
+      fi
+    fi
+  fi
+  printf '\033[2m%s\033[0m %b%s%%\033[0m%b' "$label" "$color" "$pct" "$countdown"
+}
 
 # Separator
 SEP='\033[2m│\033[0m'
@@ -155,11 +172,14 @@ if [ -n "$line2" ]; then
 else
   line2=$(printf '\033[33m$%s\033[0m' "$cost")
 fi
-if [ -n "$session_time" ]; then
-  line2="$line2 $(printf '%b \033[36m\xef\x80\x97 %s\033[0m' "$SEP" "$session_time")"
+if [ "$lines_added" -gt 0 ] 2>/dev/null || [ "$lines_removed" -gt 0 ] 2>/dev/null; then
+  line2="$line2 $(printf '%b \033[32m+%s\033[0m/\033[31m-%s\033[0m' "$SEP" "$lines_added" "$lines_removed")"
 fi
-if [ "$cache_pct" -gt 0 ] 2>/dev/null; then
-  line2="$line2 $(printf ' \033[2m↻%s%%\033[0m' "$cache_pct")"
+if five_widget=$(format_limit "5h" "$five_h" "$five_reset"); then
+  line2="$line2 $(printf '%b %b' "$SEP" "$five_widget")"
+fi
+if week_widget=$(format_limit "7d" "$week" "$week_reset"); then
+  line2="$line2 $(printf '%b %b' "$SEP" "$week_widget")"
 fi
 
 printf '%b\n\n%b' "$line1" "$line2"
