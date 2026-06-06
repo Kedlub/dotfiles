@@ -21,6 +21,58 @@ When to look things up (non-exhaustive):
 - Answering a question about current best practices or defaults
 - Any time you're about to say "I believe" or "IIRC" — look it up instead
 
+## Agent-Portable Project Instructions — Prefer AGENTS.md
+
+Keep project instructions accessible to every coding agent, not just Claude
+Code. `AGENTS.md` is the open, cross-tool standard (read by Claude Code, Codex,
+Cursor, Copilot, Gemini, Aider, and others); `CLAUDE.md` is Claude-specific.
+Claude Code reads `CLAUDE.md`, **not** `AGENTS.md`, natively — so bridge the two
+rather than duplicating content.
+
+**Respect the repo's existing convention first.** Before creating or editing any
+instruction file, check what's already there and which file is the source of
+truth — don't impose the default below on a project that already has a working
+setup. Tells to look for:
+- A symlink (`CLAUDE.md → AGENTS.md` or the reverse) — edit the real target.
+- An `@`-import chain — edit the file that holds the actual content.
+- A manually duplicated copy (e.g. `CLAUDE.md` is the source and `AGENTS.md` is
+  a hand-maintained copy git-ignored via `.git/info/exclude` or `.gitignore`).
+  Here, edit the source and re-sync the copy; don't convert it to a symlink/
+  import unless asked.
+When the source is ambiguous, check `git log`/`.gitignore`/`.git/info/exclude`
+and the symlink status (`ls -l`) before writing, and ask if still unclear.
+
+The guidance below is the **default for greenfield projects** with no existing
+convention. When creating a new project, or when asked to create/init a
+project's `CLAUDE.md`:
+- **Write the real instructions in `AGENTS.md` at the repo root**, never in a
+  standalone `CLAUDE.md`.
+- **Bridge `CLAUDE.md` to it** using one of:
+  - **Symlink (preferred default on macOS/Fedora):** `ln -s AGENTS.md CLAUDE.md`
+    — both platforms support symlinks, so the two files stay identical with zero
+    maintenance.
+  - **Import:** create `CLAUDE.md` containing `@AGENTS.md` on its own line. Use
+    this when you want Claude-specific notes *in addition to* the shared content
+    — put them below the import.
+- In a monorepo, place a nested `AGENTS.md` in each package; agents read the
+  nearest file in the tree (closest wins). Bridge each with its own symlink/
+  import only if a tool there needs `CLAUDE.md`.
+
+`@import` mechanics: `@path/to/file` resolves relative to the file containing
+it; `~` and absolute paths work; max 4 hops deep. The first external import in a
+project triggers a one-time approval dialog.
+
+Keep `AGENTS.md` concise (aim under ~150 lines) and cover the high-value areas:
+exact build/test/lint/run commands, testing conventions, project structure,
+code style, git/PR/commit conventions, security gotchas, and a "do not touch"
+boundaries list (generated files, secrets, vendored code, migrations). Use real
+copy-pasteable commands, not placeholders — agents auto-run the test/lint
+commands they find. Link out to deeper docs rather than inlining everything, and
+update it in the same change that alters build/test/structure.
+
+For Claude-only features that don't belong in the shared file (skills, hooks,
+settings), use `.claude/` and `CLAUDE.local.md`, not `AGENTS.md`.
+
 ## Preferred CLI Tools
 
 Use these modern CLI tools instead of their traditional alternatives:
