@@ -63,7 +63,8 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/statusline.sh"
+    "command": "~/.claude/statusline.sh",
+    "refreshInterval": 60
   },
   "enabledPlugins": {
     "claude-code-wakatime@wakatime": false,
@@ -89,5 +90,6 @@
   "theme": "dark-ansi",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "skipWorkflowUsageWarning": true
 }
