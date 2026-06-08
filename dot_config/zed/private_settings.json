@@ -7,21 +7,22 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "diff_view_style": "unified",
   "project_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "collaboration_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "session": {
-    "restore_unsaved_buffers": false
+    "restore_unsaved_buffers": false,
   },
   "window_decorations": "server",
   "restore_on_startup": "launchpad",
   "edit_predictions": {
     "ollama": {
       "prompt_format": "qwen",
-      "model": "nishtahir/zeta:latest"
+      "model": "nishtahir/zeta:latest",
     },
     "provider": "ollama",
   },
@@ -31,28 +32,7 @@
   },
   "colorize_brackets": true,
   "show_signature_help_after_edits": true,
-  "disable_ai": false,
-  "context_servers": {
-    "mcp-server-context7": {
-      "enabled": true,
-      "settings": {
-        "default_minimum_tokens": "10000",
-      },
-    },
-  },
-  "agent": {
-    "dock": "right",
-    "default_profile": "write",
-    "inline_assistant_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5-mini",
-    },
-    "model_parameters": [],
-    "default_model": {
-      "provider": "copilot_chat",
-      "model": "claude-sonnet-4.5",
-    },
-  },
+  "disable_ai": true,
   "icon_theme": {
     "mode": "system",
     "dark": "Catppuccin Macchiato",
