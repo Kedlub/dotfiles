@@ -140,6 +140,21 @@ Use these modern CLI tools instead of their traditional alternatives:
   - Use `uv` for `pyproject.toml`, dependency, virtual environment, and Python
     version management when there is no conflicting project convention
 
+### Node Version Management
+- **fnm**: Node version manager in use (not nvm/asdf). It reads `.nvmrc` /
+  `.node-version`.
+  - Auto-switching is `--use-on-cd`, a shell `chpwd` hook that only fires on an
+    *interactive* `cd`. A `cd <dir> && ...` baked into a non-interactive command
+    (the kind agents run) does NOT trigger it — the shell stays on fnm's default
+    Node, which can be a newer major than the project pins.
+  - Symptom of the wrong version: tests/builds fail in ways the project doesn't
+    expect (e.g. experimental-API differences like `localStorage.getItem is not
+    a function` under a too-new Node).
+  - Fix: prefix project commands with `fnm use` so it resolves the nearest
+    version file, e.g. `cd path/to/pkg && fnm use && npm run test`. Persisted-cwd
+    shells started inside the pinned dir resolve correctly on their own, but
+    `fnm use` is the bulletproof guard.
+
 ## Git Commit Preferences
 
 Follow the 50/72 conventional commit format:
