@@ -155,6 +155,28 @@ Use these modern CLI tools instead of their traditional alternatives:
     shells started inside the pinned dir resolve correctly on their own, but
     `fnm use` is the bulletproof guard.
 
+## Code Comments
+
+Write comments sparingly and keep them compact. Default to letting clear
+names and straightforward code speak for themselves — don't narrate what the
+code already says.
+
+Add a comment only where it earns its place:
+- Non-obvious or complex logic that isn't clear from reading it
+- A fix or workaround for an edge case, bug, or platform quirk — note the *why*
+- A deliberate non-obvious choice, tradeoff, or constraint
+- A warning about a gotcha or non-obvious side effect
+
+Avoid:
+- Restating the code ("increment i", "loop over items")
+- Section banners and decorative dividers
+- Commentary on the change/diff itself ("renamed from foo", "now also handles")
+  — that belongs in the commit message, not the code
+- Redundant docstrings on self-explanatory functions
+
+Keep them short — prefer a single concise line over a paragraph. Match the
+surrounding file's existing comment style and density.
+
 ## Git Commit Preferences
 
 Follow the 50/72 conventional commit format:
@@ -162,6 +184,30 @@ Follow the 50/72 conventional commit format:
 - Description: Maximum 72 characters per line
 - No formatting (no markdown, no bullet points)
 - Plain text only in commit messages
+
+## Pull Requests — Be Careful with Issue-Closing Keywords
+
+GitHub auto-closes a linked issue when a PR merges if the description (or any
+commit) contains a closing keyword: `close`/`closes`/`closed`, `fix`/`fixes`/
+`fixed`, `resolve`/`resolves`/`resolved` followed by an issue reference (`#123`,
+`owner/repo#123`, or a full issue URL). Treat these as side-effectful — don't
+emit them by default.
+
+- **Do not** use closing keywords to link an issue unless the user has
+  explicitly approved or requested it for that specific PR. An issue is often
+  broader than a single PR; closing it on merge is frequently wrong.
+- When you want to reference an issue for context, use a **non-closing** form
+  instead: plain `#123`, `Ref #123`, `Related to #123`, `Part of #123`, or
+  `See #123`. These link without triggering auto-close.
+- This applies to the PR **description/body**, and also to commit messages,
+  since GitHub honors closing keywords in commits too.
+
+**Pre-process plans before attaching them to a PR.** When a plan, task list, or
+notes get embedded into a PR description, scan the text first and neutralize any
+incidental closing keyword + issue reference (e.g. a checklist line like
+"Fixes #42") so it doesn't silently close an issue on merge. Rewrite to a
+non-closing form or drop the reference. If a plan legitimately should close an
+issue, confirm with the user before keeping the keyword.
 
 ## Planning and Brainstorming
 
