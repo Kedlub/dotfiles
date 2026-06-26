@@ -75,29 +75,30 @@ settings), use `.claude/` and `CLAUDE.local.md`, not `AGENTS.md`.
 
 ## Preferred CLI Tools
 
-Use these modern CLI tools instead of their traditional alternatives:
+Builtin tools come first. For searching, finding, and reading files, the builtin
+`Grep` (ripgrep under the hood), `Glob`, and `Read` tools beat shelling out —
+they return structured results, avoid shell-quoting pitfalls, and don't spend
+tokens on ANSI color. Reach for the CLI tools below when a builtin doesn't cover
+the case (shell pipelines, type/time filters, exec-per-result) or for the user's
+own interactive terminal.
 
 ### File Search and Navigation
-- **ripgrep (rg)**: Use instead of `grep` for faster, more intelligent searching
+- **Grep tool**: Prefer the builtin `Grep` tool for content search; it runs
+  ripgrep under the hood. Drop to `rg` in Bash only for flags the tool doesn't
+  expose.
+- **fd**: Prefer the builtin `Glob` tool for finding files by name or path
+  pattern. Reach for `fd` when you need more than name matching — type filters,
+  modification time, or `-x` to run a command per result.
   - Respects .gitignore by default
-  - Supports regex patterns natively
-  - Example: `rg "pattern" --type python`
-
-- **fd**: Use instead of `find` for simpler, faster file discovery
-  - More intuitive syntax
-  - Respects .gitignore by default
-  - Example: `fd "*.py"` instead of `find . -name "*.py"`
+  - Example: `fd -e py` or `fd pattern --changed-within 1d`
 
 ### System Analysis
-- **dua (Disk Usage Analyzer)**: Use for analyzing disk space
-  - Interactive TUI available with `dua interactive` or `dua i`
-  - Faster than `du` with better visualization
+- **dua (Disk Usage Analyzer)**: Faster `du` for analyzing disk space
+  - Example: `dua /path` for non-interactive aggregate sizes
 
 ### File Listing
-- **eza**: Use instead of `ls` for enhanced directory listings
-  - Git integration shows file status
-  - Tree view with `eza --tree`
-  - Better formatting and icons
+- **eza**: Enhanced `ls` (git status, tree view via `eza --tree`). Use the
+  `Glob`/`Read` tools when inspecting files for myself.
 
 ### JSON, YAML, and HTTP
 - **jq**: Use for JSON processing in shell pipelines
@@ -111,14 +112,6 @@ Use these modern CLI tools instead of their traditional alternatives:
 ### Code Analysis
 - **tokei**: Use for quick codebase statistics (lines of code by language)
   - Example: `tokei src/`
-
-### Diff and Output
-- **bat**: Use for syntax-highlighted output in shell pipelines
-  - Example: `some_command | bat -l json`
-- **delta**: Assumed configured as git pager for better diffs
-- **difftastic**: AST-aware structural diffs that understand language syntax
-  - Use when semantic diff matters more than line-level diff
-  - Example: `difft old.py new.py` or `GIT_EXTERNAL_DIFF=difft git diff`
 
 ### Benchmarking
 - **hyperfine**: Use for benchmarking and comparing command performance
