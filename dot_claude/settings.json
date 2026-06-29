@@ -52,24 +52,24 @@
             "command": "~/.claude/hooks/worktree-guard.sh"
           }
         ]
-      }
-    ],
-    "Stop": [
+      },
       {
+        "matcher": "PushNotification",
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/notify.sh stop"
+            "command": "~/.claude/notify.sh attention"
           }
         ]
       }
     ],
     "Notification": [
       {
+        "matcher": "permission_prompt",
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/notify.sh notification"
+            "command": "~/.claude/notify.sh permission"
           }
         ]
       }
@@ -103,7 +103,7 @@
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "theme": "dark-ansi",
-  "preferredNotifChannel": "auto",
+  "preferredNotifChannel": "notifications_disabled",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,

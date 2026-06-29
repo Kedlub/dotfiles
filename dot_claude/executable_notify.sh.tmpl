@@ -1,19 +1,52 @@
 #!/usr/bin/env bash
-# Plays a Claude Code hook notification sound. Invoked from settings.json.
+# Claude Code attention notifier: a sound plus a silent desktop banner.
+# Hook-driven — reads the firing hook's JSON on stdin and lifts the message from
+# the field that hook uses; falls back to "$2", then a per-mode default.
+#   permission - Notification hook (permission_prompt): Claude is blocked on me.
+#                message <- .message
+#   attention  - PreToolUse hook on the PushNotification tool: Claude is handing
+#                control back. message <- .tool_input.message (same text that
+#                goes to my phone). Exits 0 and prints nothing, so the push still
+#                proceeds untouched.
+# Banners are silent on purpose; the sound comes from afplay/paplay so we never
+# double up with Claude Code's own notification. No Stop hook: it fires on every
+# turn-end (incl. background resumes) and can't tell a real handoff from a
+# self-resume.
 set -eu
 
 event="${1:-}"
+msg="${2:-}"
 
-{{ if eq .chezmoi.os "darwin" -}}
+if [ -z "$msg" ] && ! [ -t 0 ] && command -v jq >/dev/null 2>&1; then
+  payload="$(cat)"
+  case "$event" in
+    permission) msg="$(jq -r '.message // empty'            <<<"$payload" 2>/dev/null || true)" ;;
+    attention)  msg="$(jq -r '.tool_input.message // empty' <<<"$payload" 2>/dev/null || true)" ;;
+  esac
+fi
+
 case "$event" in
-  stop)         afplay /System/Library/Sounds/Glass.aiff ;;
-  notification) afplay /System/Library/Sounds/Tink.aiff ;;
+  permission) title="Claude needs permission"; [ -n "$msg" ] || msg="Waiting for your approval" ;;
+  attention)  title="Claude Code";             [ -n "$msg" ] || msg="Ready for you" ;;
   *) exit 0 ;;
 esac
-{{ else -}}
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Banner first (instant), then sound in the foreground so the script outlives it.
+# argv form avoids all the AppleScript string-escaping traps.
+osascript - "$title" "$msg" <<'OSA'
+on run argv
+  display notification (item 2 of argv) with title (item 1 of argv)
+end run
+OSA
 case "$event" in
-  stop)         paplay /usr/share/sounds/ocean/stereo/completion-success.oga ;;
-  notification) paplay /usr/share/sounds/ocean/stereo/message-new-instant.oga ;;
-  *) exit 0 ;;
+  permission) afplay /System/Library/Sounds/Tink.aiff ;;
+  attention)  afplay /System/Library/Sounds/Glass.aiff ;;
+esac
+{{ else -}}
+command -v notify-send >/dev/null 2>&1 && notify-send "$title" "$msg"
+case "$event" in
+  permission) paplay /usr/share/sounds/ocean/stereo/message-new-instant.oga ;;
+  attention)  paplay /usr/share/sounds/ocean/stereo/completion-success.oga ;;
 esac
 {{ end -}}

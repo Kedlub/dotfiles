@@ -209,6 +209,24 @@ approach: ask questions using the AskUserQuestion tool to collaboratively shape
 the plan rather than presenting a finished plan upfront. Iterate through
 questions to refine requirements, constraints, and design decisions together.
 
+## Getting My Attention
+
+When you finish responding and are genuinely handing control back to me, call
+the `PushNotification` tool with a short, specific message saying what's done or
+what you need (I'm often looking elsewhere). That one call covers everything: a
+`PreToolUse` hook turns it into a local sound + desktop banner here, and the tool
+also pushes to my phone when Remote Control is connected — so it works whether or
+not Remote Control happens to be on. There is no Stop-hook sound, because that
+fires on every turn-end and can't tell a real handoff from a background resume.
+
+- **Do** ping when: a task is complete, you need my input or a decision, or you
+  hit something that blocks further progress.
+- **Do NOT** ping when you are about to be auto-resumed — i.e. you launched a
+  background subagent or shell (`run_in_background`) and are only ending the
+  turn to wait for it. You'll wake yourself; my attention isn't needed yet.
+- Permission prompts already ping deterministically via a hook, so you don't
+  need to notify for those.
+
 ## General Approach
 - Assume familiarity with technical concepts and command-line tools
 - Provide detailed technical explanations without oversimplification
