@@ -9,9 +9,9 @@
 #                goes to my phone). Exits 0 and prints nothing, so the push still
 #                proceeds untouched.
 # Banners are silent on purpose; the sound comes from afplay/paplay so we never
-# double up with Claude Code's own notification. No Stop hook: it fires on every
-# turn-end (incl. background resumes) and can't tell a real handoff from a
-# self-resume.
+# double up with Claude Code's own notification. The Stop hook never sounds
+# directly — it can't tell a real handoff from a background-resume — it only
+# nudges the model to call PushNotification, which lands back here.
 set -eu
 
 event="${1:-}"

@@ -211,21 +211,20 @@ questions to refine requirements, constraints, and design decisions together.
 
 ## Getting My Attention
 
-When you finish responding and are genuinely handing control back to me, call
+When you finish a working turn and are genuinely handing control back to me, call
 the `PushNotification` tool with a short, specific message saying what's done or
-what you need (I'm often looking elsewhere). That one call covers everything: a
-`PreToolUse` hook turns it into a local sound + desktop banner here, and the tool
-also pushes to my phone when Remote Control is connected — so it works whether or
-not Remote Control happens to be on. There is no Stop-hook sound, because that
-fires on every turn-end and can't tell a real handoff from a background resume.
+what you need (I'm often looking elsewhere). A `PreToolUse` hook turns that into a
+local sound + desktop banner. You are the only one who knows whether the work is
+truly done — so you make the call; a `Stop` hook only nudges you once if you end a
+working turn without pinging.
 
 - **Do** ping when: a task is complete, you need my input or a decision, or you
   hit something that blocks further progress.
-- **Do NOT** ping when you are about to be auto-resumed — i.e. you launched a
-  background subagent or shell (`run_in_background`) and are only ending the
-  turn to wait for it. You'll wake yourself; my attention isn't needed yet.
-- Permission prompts already ping deterministically via a hook, so you don't
-  need to notify for those.
+- **Do NOT** ping when other `run_in_background` tasks are still running (you'll
+  be auto-resumed — wait and ping once everything is actually done), or when I'm
+  clearly still here watching a quick exchange.
+- Permission prompts and phone push are handled natively/by hooks, so don't
+  notify for those.
 
 ## General Approach
 - Assume familiarity with technical concepts and command-line tools
