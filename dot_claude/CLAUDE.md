@@ -124,9 +124,12 @@ interactive terminal.
 | `biome` | JS/TS lint+format when a project has no eslint config (else use eslint) |
 | `uv` | Python: `uv run` for scripts (PEP 723 headers / `--with` deps), plus project, venv, and version management unless the repo uses another tool |
 
-**fnm** (Node version manager in use, not nvm/asdf; reads `.nvmrc`/
-`.node-version`). Auto-switch (`--use-on-cd`) only fires on an *interactive* `cd`,
-so a non-interactive `cd dir && …` keeps fnm's default Node — often a newer major
-than the project pins, causing odd test/build failures (e.g. `localStorage.getItem
-is not a function`). Guard project commands with `fnm use`, e.g. `cd path/to/pkg
-&& fnm use && npm run test`.
+**mise** (polyglot version manager in use; manages Node, Go, npm, pnpm, yarn —
+*not* rust/python/bun, which stay on rustup/uv/bun). Reads `mise.toml` and
+idiomatic files (`.node-version`/`.nvmrc`/`.tool-versions`); global versions
+live in `~/.config/mise/config.toml`. `mise activate`'s directory hook only
+fires in an *interactive* shell, so a non-interactive `cd dir && …` keeps the
+global tool version — often a newer major than the project pins, causing odd
+test/build failures (e.g. `localStorage.getItem is not a function`). Guard
+project commands with `mise exec --` (alias `mise x --`), e.g. `cd path/to/pkg
+&& mise exec -- npm run test`.

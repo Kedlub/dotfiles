@@ -1,0 +1,10 @@
+[tools]
+go = "latest"
+node = "26"
+npm = "latest"
+pnpm = "latest"
+usage = "latest"
+yarn = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node", "npm", "pnpm", "yarn"]
