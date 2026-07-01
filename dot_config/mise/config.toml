@@ -8,3 +8,4 @@ yarn = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node", "npm", "pnpm", "yarn"]
+npm.package_manager = "bun"
