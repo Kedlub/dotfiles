@@ -107,6 +107,19 @@ _zi_widget() {
 zle -N _zi_widget
 bindkey '^[c' _zi_widget   # ^[c == Alt-c
 
+# zsh-abbr rebinds Space/Enter to widgets that reassign $LBUFFER wholesale,
+# committing an active auto-removable suffix (e.g. a completion's trailing
+# slash) as literal text instead of letting zsh remove it. Drop the suffix
+# first so space/submit strip it as they would without abbr.
+if (( ${+widgets[abbr-expand-and-insert]} )); then
+  _abbr-space-drop-suffix()  { zle auto-suffix-remove; zle abbr-expand-and-insert }
+  _abbr-accept-drop-suffix() { zle auto-suffix-remove; zle abbr-expand-and-accept }
+  zle -N _abbr-space-drop-suffix
+  zle -N _abbr-accept-drop-suffix
+  bindkey " " _abbr-space-drop-suffix
+  zle -N accept-line _abbr-accept-drop-suffix
+fi
+
 # Functions
 mkcd() {
     if (( $# != 1 )); then
