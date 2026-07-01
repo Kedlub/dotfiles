@@ -2,7 +2,6 @@ packages:
   darwin:
     brews:
       [
-        "atuin",
         "bat",
         "fastfetch",
         "fd",
@@ -24,7 +23,6 @@ packages:
   linux:
     dnf:
       [
-        "atuin",
         "bat",
         "fastfetch",
         "fd-find",

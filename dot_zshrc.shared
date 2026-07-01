@@ -71,6 +71,8 @@ alias -g -- --help='--help 2>&1 | bat -P --language=help --style=plain'
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 
+. "$HOME/.atuin/bin/env"
+
 # External tools initialization
 eval "$(starship init zsh)"
 eval "$(atuin init zsh)"
