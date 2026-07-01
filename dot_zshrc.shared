@@ -76,6 +76,11 @@ bindkey "^[[1;3D" backward-word
 # External tools initialization
 eval "$(starship init zsh)"
 eval "$(atuin init zsh)"
+# Keep AI-agent commands (author=claude-code etc.) out of autosuggestions.
+# They stay in the DB and are reachable via `atuin search --author '$all-agent'`.
+_zsh_autosuggest_strategy_atuin() {
+    suggestion=$(ATUIN_QUERY="$1" atuin search --cmd-only --limit 1 --search-mode prefix --author '$all-user' 2>/dev/null)
+}
 # mise: polyglot version manager (node/go/npm/pnpm/yarn). rust/python/bun stay
 # on rustup/uv/bun. Global versions live in ~/.config/mise/config.toml.
 eval "$(mise activate zsh)"
